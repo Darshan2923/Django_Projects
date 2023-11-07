@@ -1,0 +1,33 @@
+-What is Django?
+-Web,server side framework.
+-MVT design pattern, Batteries included.(MVC-model view controller, MVT-model view template).
+-web framework:- collection of modules,packages and libraries designed to speed up the dev.
+
+
+--MVT(Model-Data access layer, Template-Presentation Layer,View-Business Logic)
+
+                        httpResponse         --->
+            --->        ------------>        <---   Models
+facebook.com       urls                 Views
+            <---        <------------        --->
+                         httpRequest         <---   Templates
+
+
+*******startproject*******
+manage.py  -> file where we execute our command from
+db.sqlite3 -> sqlite database
+wsgi -> web server gateway interface -> actual server
+urls.py -> url routing in our project
+asgi.py ->asynchronous calls somethin'
+settings.py ->project configuration
+
+
+
+***Create a new app called studyapp
+-Now, project don't know that studyapp exists...so in settings.py > installed apps > studyapp.apps.StudyappConfig, This will connect to the app directly
+
+
+***creating views in projects ka urls.py
+
+
+
