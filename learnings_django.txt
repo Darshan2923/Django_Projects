@@ -166,3 +166,24 @@ migrate,makemigrations,createsuperuser all you know
 
 admin.js me jaake authenticate kardo to make table appear into the admin panel
 admin.site.register(Room)
+
+
+
+
+***We'll now inject the data from views to the db we'll use model manager for doing so
+queryset = ModelName.objects.all()
+    |        |        |      |
+Variable    Model   Model    Method
+that holds  name    objects
+response           attribute
+
+.get()
+.filter()
+.exclude()
+
+
+views.py
+def home(request):
+    rooms=Room.objects.all()
+    context={"rooms":rooms}
+    return render(request,'studyapp/home.html',context)
