@@ -40,7 +40,56 @@ urlpatterns = [
     path('',home)
 ]
 
+---IF WE MAKE A BIG PROJECT, THIS SHIT WILL GET MORE MESSY AS WE GO SO WE'LL FOLLOW AN OTHER APPROACH TO DEAL WITH THIS
 
+urls.py(project)>urls.py(app)>views 
+
+configure the urls.py(app) in urls.py(project)
+And do the thing(You know rest)
+
+
+
+---Adding Templates
+add a folder called templates in root directory
+
+---Configure templates
+go to settings->TEMPLATES-> DIRS=[BASE_DIR/"templates] (this says go to base directly and search for templates)
+add templates to views.py by importing render and 
+return render(request,'index.html')
+
+
+--Template inheritance
+-Reducing redundancy--->best example navbar, har html me nai daalna parega
+
+base.html
+<a href="/">LOGO</a>
+
+<hr>
+
+home.html
+{% include 'base.html'%}
+
+<h1>Home template</h1>
+
+
+--Now instead of including 'base.html' everywhere we can just 'extend' the section of template engine code that will do
+   
+
+*******IMP*********
+Template inheritance¶
+The most powerful – and thus the most complex – part of Django’s template engine is template inheritance. 
+Template inheritance allows you to build a base “skeleton” template that contains all the common elements of your site and defines blocks that child templates can override.
+
+It's like react ka 'root' div element jiske {block content} ko alag alag components se bharege
+
+Best reference for this
+https://docs.djangoproject.com/en/4.2/ref/templates/language/
+
+---You can use as many levels of inheritance as needed. One common way of using inheritance is the following three-level approach:
+
+Create a base.html template that holds the main look-and-feel of your site.
+Create a base_SECTIONNAME.html template for each “section” of your site. For example, base_news.html, base_sports.html. These templates all extend base.html and include section-specific styles/design.
+Create individual templates for each type of page, such as a news article or blog entry. These templates extend the appropriate section template.
 
 
 
