@@ -147,5 +147,22 @@ home.html
 
 
 
+********DataBases and Queries**********
+when we run django server, hame mssg aata hai 18 unapplied migrations, wo kis cheez ka hai bc?
+Django built in authentication,admin,sessions,etc ke liye already db taiyaar rakhta hai which are ready to execute lol so vo 18 unapplied migrations unke hote hai.
+python manage.py migrate
+ban gaye hamare db's
 
 
+models.py
+--we'll make python classes which will will act as schemas
+
+class Project(models.Model):
+  title=models.CharField()
+  decription=models.TextField()
+  id=models.UUIDField()
+
+migrate,makemigrations,createsuperuser all you know
+
+admin.js me jaake authenticate kardo to make table appear into the admin panel
+admin.site.register(Room)
