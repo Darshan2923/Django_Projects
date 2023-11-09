@@ -187,3 +187,17 @@ def home(request):
     rooms=Room.objects.all()
     context={"rooms":rooms}
     return render(request,'studyapp/home.html',context)
+
+
+##various relationships: one to many, many to many, etc.
+use    room=models.ForeignKey(Room,on_delete=models.CASCADE) in new model created called Message when the column is dependent on the other table for execution
+
+class Message(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    room=models.ForeignKey(Room,on_delete=models.CASCADE)
+    body=models.TextField()
+    updated=models.DateTimeField(auto_now=True)
+    created=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) :
+        return self.body[0:50]
