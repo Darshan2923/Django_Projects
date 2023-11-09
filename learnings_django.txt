@@ -192,6 +192,8 @@ def home(request):
 ##various relationships: one to many, many to many, etc.
 use    room=models.ForeignKey(Room,on_delete=models.CASCADE) in new model created called Message when the column is dependent on the other table for execution
 
+-->Message is child of Room toh vo niche aayega Room class ke and make a new class Topic jo Room class ke upar aayega
+
 class Message(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     room=models.ForeignKey(Room,on_delete=models.CASCADE)
@@ -201,3 +203,11 @@ class Message(models.Model):
 
     def __str__(self) :
         return self.body[0:50]
+
+Topic
+class Room(models.Model):
+    #host=
+    topic=models.ForeignKey(Topic,on_delete=models.SET_NULL)
+
+class Topic(models.Model):
+  name=models.CharField(max_length=20)
