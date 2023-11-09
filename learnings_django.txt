@@ -92,6 +92,60 @@ Create a base_SECTIONNAME.html template for each “section” of your site. For
 Create individual templates for each type of page, such as a news article or blog entry. These templates extend the appropriate section template.
 
 
+----Adding data onto the templates
+views.py
+rooms=[
+    {'id':1,'name':"Let's learn python"},
+    {'id':2,'name':"Design with me"},
+    {'id':3,'name':"Frontend development"},
+]
+
+def home(request):
+    return render(request,'home.html','rooms':rooms)
+
+---we now have access to rooms in home template
+
+home.html
+<div>
+{%for room in rooms%}
+<h5>{{room.id}} --> {{room.name}}</h5>
+{%endfor%}
+</div>
+
+we can make a context dictionary to just pass down as the parameter
+
+context={"rooms":rooms}
+
+return render("","",context)
+
+
+
+---structuring the templates and seperating the templates which have only sections of the page
+Make a new folder template in studyapp > New folder as same name as 'studyapp' > cut and paste home.html and room.html in that folder
+
+Change in views.py
+return render(request,'studyapp/home.html',context)
+
+
+
+---dynamic url routing
+urls.py(apps)
+
+path('room/<str:pk>/',views.room,name="room")
+
+views.py
+def room(request,pk):
+  room=None
+  for i in rooms:
+    if i['id']==int(pk):
+            room=i
+    context={'room':room}
+  return render('--')
+
+home.html
+<h5>{{room.id}} --><a href="/room/{{room.id}}"> {{room.name}}</a></h5>
+
+
 
 
 
