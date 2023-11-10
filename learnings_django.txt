@@ -250,3 +250,54 @@ class Room:
 
 
 *****To update a room we create a new function in view called 'updateRoom'
+def updateRoom(request,pk):
+   room=Room.objects.get(id=pk)
+   form=RoomForm(instance=room)
+
+   if request.method=='POST':
+      form=RoomForm(request.POST,instance=room)
+      if form.is_valid():
+         form.save()
+         return redirect('home')
+   context={'form':form}
+   return render(request,'studyapp/room_form.html',context)
+
+urls.py(app)
+      path('update-room/<str:pk>/',views.updateRoom,name='update-room')
+
+home.html
+       <a href="{%url 'update-room' room.id%}">Edit</a>
+
+
+**Now we add delete functionality to our project
+--We'll have to create a new template just to create delete functionality in templates/studyapp
+--It will be a generic template to delete any template from the project
+
+delete.html
+{%extends 'main.html' %}
+
+{%block content%}
+<form action="" method="post">
+    <p>Are you sure you want to delete "{{obj}}"?</p>
+    <a href="{{request.META.HTTP_REFERER}}">Go Back</a>
+    <input type="submit" value="Confirm">
+</form>
+{%endblock content%}
+
+views.py
+def deleteRoom(request,pk):
+   room=Room.objects.get(id=pk)
+   if request.method=='POST':
+      room.delete()
+      return redirect('home')
+   return render(request,'studyapp/delete.html',{'obj':room})
+
+home.html
+
+            <a href="{% url 'delete-room' room.id%}">Delete</a>
+
+
+
+
+
+
