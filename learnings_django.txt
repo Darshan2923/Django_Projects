@@ -227,3 +227,26 @@ class RoomForm(ModelForm):
     class Meta:
         model=Room
         fields='__all__'
+
+view.py
+def createRoom(request):
+   form=RoomForm()
+   if request.method=='POST':
+      print(request.POST)
+      # request.post.get('name')
+      form=RoomForm(request.POST)
+      if form.is_valid():
+         form.save()
+         return redirect('home')
+   context={'form':form}
+   return render(request,'studyapp/room_form.html',context)
+
+
+****We'll try to add newest rooms created first into the home page directcly from the models
+class Room:
+    "------------------------"
+    class Meta:
+        ordering=['-updated','-created']  # '-' lagaya toh descending nai toh ascending
+
+
+*****To update a room we create a new function in view called 'updateRoom'
