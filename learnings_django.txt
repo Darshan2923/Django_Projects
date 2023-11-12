@@ -405,6 +405,76 @@ def loginPage(request):
 {%endblock content%}
 
 
+****Whole login and logout code
+views.py
+#####I created this view in the last after DeleteRoom
+def loginPage(request):
+   if request.method=='POST':
+      username=request.POST.get('username')
+      password=request.POST.get('password')
+
+      try:
+         user=User.objects.get(username=username)
+      except:
+         messages.error(request,'User does not exists!!!')
+
+      user=authenticate(request,username=username,password=password) #returns user object or None if user do not exists
+
+      if user is not None:
+         login(request,user)
+         return redirect('home')
+      else:
+         messages.error("Invalid credentials")
+   context={}
+   return render(request,'studyapp/login_register.html',context)
+
+def logoutUser(request):
+   logout(request)
+   return redirect('home')
+
+
+*****main.html
+<body>
+    <h1>
+        <a href="/">LOGO</a>
+    </h1>
+
+    <form action="{% url 'home'%}" method="get">
+        <input type="text" name="q" placeholder="Search Rooms...">
+    </form>
+
+
+    {%if request.user.is_authenticated%}
+    <a href="{% url 'logout' %}">Logout</a>
+    {%else%}
+    <a href="{% url 'login' %}">Login</a>
+    {%endif%}
+    <hr>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}
+    {%endblock content%}
+</body>
+
+
+****urls.py
+    path('login/',views.loginPage,name='login'),
+    path('logout/',views.logoutUser,name='logout'),
+
+
+*****Login ke time session token(id) store hota hai aur logout ke time vo browser ke session se nikal jaata hai,
+Django handles all the shit of login,hashing,encryption. But hum khudka form banaa rahe, baaki sab django handle karega,
+browser me session banana, encryption,hashing, storing,etc.
+
+
+
+
 
 
 
