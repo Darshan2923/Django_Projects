@@ -297,6 +297,64 @@ home.html
             <a href="{% url 'delete-room' room.id%}">Delete</a>
 
 
+we'll style our project a little
+
+Browse Topics in sidebar to filter the rooms based on the Topics
+
+home.html
+<style>
+    .block_container {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+    }
+</style>
+<div class="block_container">
+    <div class="block-sidebar">
+        <h1>Browse Topics</h1>
+        <hr>
+        <div>
+            <a href="{% url 'home'%}">All</a>
+        </div>
+        {%for t in topic%}
+        <div>
+            <a href="{% url 'home'%}?q={{t.name}}">{{t.name}}</a>
+        </div>
+        {%endfor%}
+    </div>
+
+views.py
+def home(request):
+    q=request.GET.get('q') if request.GET.get('q')!=None else ''
+    rooms=Room.objects.filter(topic__name__icontains=q)
+    topic=Topic.objects.all()
+    context={"rooms":rooms,"topic":topic}
+    return render(request,'studyapp/home.html',context)
+
+
+Code Explanation
+{
+    Function Definition:
+
+def home(request): defines a function named home that takes a request parameter. In Django, this is typically used in views to handle HTTP requests.
+Getting 'q' Parameter:
+
+q = request.GET.get('q') if request.GET.get('q') != None else '' extracts the value of the 'q' parameter from the GET parameters of the request. If 'q' is not present, it sets q to an empty string.
+Filtering Rooms:
+
+rooms = Room.objects.filter(topic__name__icontains=q) queries the Room model to get a queryset of rooms where the topic name contains the value of 'q' (case-insensitive).
+Querying Topics:
+
+topic = Topic.objects.all() queries all topics from the Topic model.
+Creating Context Dictionary:
+
+context = {"rooms": rooms, "topic": topic} creates a dictionary called context containing the queried rooms and topics. This dictionary is used to pass data to the template.
+Rendering the Template:
+
+return render(request, 'studyapp/home.html', context) renders the 'home.html' template with the provided context and returns the resulting HTTP response.
+In summary, this code defines a Django view function that handles an HTTP request. It retrieves a parameter 'q' from the request's GET parameters, filters rooms based on the topic name, queries all topics, creates a context dictionary with the results, and renders the 'home.html' template with this context. The rendered HTML page will likely display a list of rooms and topics based on the specified filtering criteria.
+}
+
+
 
 
 
