@@ -373,7 +373,36 @@ def home(request):
 
 
 **********User Login in Django**********
+vivews.py
+def loginPage(request):
+   if request.method=='POST':
+      username=request.POST.get('username')
+      password=request.POST.get('password')
 
+      try:
+         user=User.objects.get(username=username)
+      except:
+         print("User already exists!!!")
+   context={}
+   return render(request,'studyapp/login_register.html',context)
+
+   login.html
+   {%extends 'main.html'%}
+
+{%block content%}
+<div>
+    <form action="" method="get">
+        {%csrf_token%}
+        <label for="username">UserName:</label>
+        <input type="text" placeholder="Enter Username" name="username">
+        <label for="password">Password:</label>
+        <input type="password" placeholder="Enter PassWord" name="password">
+
+        <input type="submit" value="Submit">
+
+    </form>
+</div>
+{%endblock content%}
 
 
 
