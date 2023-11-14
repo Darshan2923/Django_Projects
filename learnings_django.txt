@@ -700,6 +700,23 @@ def home(request):
 Remove all activity div and replace it with {% include 'studyapp/activity_component.html' %}
 
 same with topics_component.html
+and feed
+
+*****User Profile page
+views.py
+def userProfile(request,pk):
+   user=User.objects.get(id=pk)
+   context={'user':user}
+   return render(request,'userProfile.html',context)
+
+userProfile.html
+{% extends 'main.html' %}
+
+{% block content %}
+<h1>{{user.username}}</h1>
+{% endblock %}
+
+make that @username to a link in home.html--->  <a href="{% url 'user-profile' room.host.id %}">@{{room.host.username}}</a>
 
 
 
