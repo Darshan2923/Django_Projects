@@ -621,6 +621,9 @@ def room(request,pk):
 
 
 *****Add participants into the project
+Add     participants=models.ManyToManyField(User,related_name='participants',blank=True) to models.py ke Room ka model
+Add       participants=room.participants.all()   to Room ka views and add that to context dictionary
+
 
 
 

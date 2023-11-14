@@ -74,6 +74,7 @@ def home(request):
 
 def room(request,pk):
    room=Room.objects.get(id=pk)
+   participants=room.participants.all()
 #   room=None
 #   for i in rooms:
 #     if i["id"]==int(pk):
@@ -86,8 +87,9 @@ def room(request,pk):
          room=room,
          body=request.POST.get('body')
       )
+      room.participants.add(request.user)
       return redirect('room',pk=room.id)
-   context={'room':room,'room_messages':room_messages}
+   context={'room':room,'room_messages':room_messages,'participants':participants}
    return render(request,'studyapp/room.html',context)
 
 @login_required(login_url='login')
