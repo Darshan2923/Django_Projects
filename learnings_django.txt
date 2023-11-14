@@ -567,6 +567,61 @@ def registerUser(request):
    return render(request,'studyapp/login_register.html',context)
 
 
+******Messages CRUD operations
+room.html
+{% extends 'main.html'%}
+
+{% block content%}
+<h1>{{room.name}}</h1>
+<p>{{room.description}}</p>
+
+<div class="comment-wrapper">
+    <h3>Conversation</h3>
+    <hr>
+
+    {%for message in room_messages%}
+    <div>
+        <small>@{{message.user}} {{message.created | timesince}} ago</small>
+        <hr>
+        <p>{{message.body}}</p>
+    </div>
+    {%endfor%}
+</div>
+
+
+{% if request.user.is_authenticated %}
+<div class="comment-form">
+    <form action="" method="POST">
+        {%csrf_token%}
+        <input type="text" name="body" placeholder="Write your message here...">
+    </form>
+</div>
+{%endif%}
+
+{%endblock content%}
+
+views.py
+def room(request,pk):
+   room=Room.objects.get(id=pk)
+#   room=None
+#   for i in rooms:
+#     if i["id"]==int(pk):
+#         room=i
+   room_messages=room.message_set.all().order_by('-created')  #get all the children(subset) messages of the given room
+
+   if request.method=="POST":
+      message=Message.objects.create(
+         user=request.user,
+         room=room,
+         body=request.POST.get('body')
+      )
+      return redirect('room',pk=room.id)
+   context={'room':room,'room_messages':room_messages}
+   return render(request,'studyapp/room.html',context)
+
+
+*****Add participants into the project
+
 
 
 
