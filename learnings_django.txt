@@ -687,7 +687,27 @@ home.html
             <a href="{% url 'delete-message' message.id %}">Delete</a>
             {%endif%}
 
-            Add this below mssg and all will work automaticaly
+            Add this below mssg and all will work automatically
+
+*****Modify Activity so that only activity of that room is displayed on the feed after filter
+views.py
+def home(request):
+    room_messages=Message.objects.filter(room__topic__name__icontains=q)
+
+
+****We'll make a reusable component for displaying activity feed so to make use of that later
+
+Remove all activity div and replace it with {% include 'studyapp/activity_component.html' %}
+
+same with topics_component.html
+
+
+
+
+
+
+
+
 
 
 

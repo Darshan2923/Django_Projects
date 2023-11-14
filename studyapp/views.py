@@ -69,7 +69,7 @@ def home(request):
     rooms=Room.objects.filter(Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q))
     topic=Topic.objects.all()
     room_count=rooms.count()
-    room_messages=Message.objects.all()
+    room_messages=Message.objects.filter(room__topic__name__icontains=q)
     context={"rooms":rooms,"topic":topic,"room_count":room_count,'room_messages':room_messages}
     return render(request,'studyapp/home.html',context)
 
