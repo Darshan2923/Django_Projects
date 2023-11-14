@@ -549,6 +549,24 @@ also add page='login' in def loginUser
 we'll create inbuilt form for the register form 
 views.py
 from django.contrib.auth.forms import UserCreationForm
+def registerUser(request):
+   form=UserCreationForm()
+
+   if request.method=='POST':
+      form=UserCreationForm(request.POST)
+      if form.is_valid():
+         user=form.save(commit=False)
+         user.username=user.username.lower()
+         user.save()
+         login(request,user)
+         return redirect('home')
+      else:
+         messages.error(request,'An error occured during registration!!')
+
+   context={'form':form}
+   return render(request,'studyapp/login_register.html',context)
+
+
 
 
 
