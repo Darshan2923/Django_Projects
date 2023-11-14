@@ -69,7 +69,8 @@ def home(request):
     rooms=Room.objects.filter(Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q))
     topic=Topic.objects.all()
     room_count=rooms.count()
-    context={"rooms":rooms,"topic":topic,"room_count":room_count}
+    room_messages=Message.objects.all()
+    context={"rooms":rooms,"topic":topic,"room_count":room_count,'room_messages':room_messages}
     return render(request,'studyapp/home.html',context)
 
 def room(request,pk):
@@ -79,7 +80,7 @@ def room(request,pk):
 #   for i in rooms:
 #     if i["id"]==int(pk):
 #         room=i
-   room_messages=room.message_set.all().order_by('-created')  #get all the children(subset) messages of the given room
+   room_messages=room.message_set.all() #get all the children(subset) messages of the given room
 
    if request.method=="POST":
       message=Message.objects.create(

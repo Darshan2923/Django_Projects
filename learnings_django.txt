@@ -661,6 +661,34 @@ room.html
 
 
 
+******Activity Feed in th project
+
+    class Meta:
+        ordering=['-updated','-created']
+        Add this to Message model
+
+Add to views.py>room function       room_messages=room.message_set.all()
+
+home.html
+<div class="activity-container">
+        <h3>Recent Activites</h3>
+        {%for message in room_messages%}
+        <div>
+            <small>@{{message.user}} {{message.created | timesince}}</small>
+            <small>replied to "{{message.room}}"</small>
+            <p>{{message}}</p>
+        </div>
+        {%endfor%}
+    </div>
+
+
+****Delete your  Activity from the home page 
+    
+
+
+
+
+
 
 
 
