@@ -683,7 +683,11 @@ home.html
 
 
 ****Delete your  Activity from the home page 
-    
+       {%if request.user == message.user %}
+            <a href="{% url 'delete-message' message.id %}">Delete</a>
+            {%endif%}
+
+            Add this below mssg and all will work automaticaly
 
 
 
