@@ -623,7 +623,39 @@ def room(request,pk):
 *****Add participants into the project
 Add     participants=models.ManyToManyField(User,related_name='participants',blank=True) to models.py ke Room ka model
 Add       participants=room.participants.all()   to Room ka views and add that to context dictionary
+Add if request.method=="POST":
+      message=Message.objects.create(
+         user=request.user,
+         room=room,
+         body=request.POST.get('body')
+      )
+  ------->    room.participants.add(request.user)
+      return redirect('room',pk=room.id)
 
+
+*******Delete messages when logged in
+views.py
+
+@login_required(login_url='login')
+def deleteMessage(request,pk):
+   message=Message.objects.get(id=pk)
+
+   if request.user!=message.user:
+      return HttpResponse("Your'e not allowed to do this!!!")
+   
+   if request.method=='POST':
+      message.delete()
+      return redirect('home')
+   return render(request,'studyapp/delete.html',{'obj':message})
+
+urls.py
+    path('delete-message/<str:pk>/',views.deleteMessage,name='delete-message'),
+
+
+room.html
+    {%if request.user==message.user%}
+                <a href="{% url 'delete-message' message.id %}">Delete</a>
+                {%endif%}
 
 
 
