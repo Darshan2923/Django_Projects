@@ -753,6 +753,20 @@ def userProfile(request,pk):
    return render(request,'studyapp/userProfile.html',context)
 
 *****Static files
+static files are images aur styles ke files which can be then rendered in the template
+
+settings.py
+STATICFILES_DIRS=[
+      BASE_DIR/'static'
+]
+
+make  a static folder in the root directory then images and styles folder in it
+
+main.html
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles/main.css' %}">
+
+
 
 
 
