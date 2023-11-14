@@ -474,6 +474,85 @@ browser me session banana, encryption,hashing, storing,etc.
 
 
 
+*****Restrict the user based on the logged in credentials
+views.py
+from django.contrib.auth.decorators import login_required
+
+above createRoom,updateRoom function
+@login_required(login_url='login')
+
+if not logged in user tries to do somethin'
+
+views.py
+def deleteRoom(request):
+   if request.user!=room.host:
+      return HttpResponse("Your'e not allowed to do this!!!")
+
+To show edit and delete butttons to the owner of the post
+
+home.html
+     {%if request.user == room.host %}
+                <a href="{%url 'update-room' room.id%}">Edit</a>
+                <a href="{% url 'delete-room' room.id%}">Delete</a>
+                {%endif%}
+
+
+
+Now we don't want the user to manually type the url and login again, we would restrict that act as well
+
+views.py
+def loginPage(request):
+
+   if request.user.is_authenticated:
+      return redirect('home')
+   
+
+*****User Registration in Django
+login_register.html
+{%if page == 'login' %}
+<div>
+    <form action="" method="post">
+        {%csrf_token%}
+        <label for="username">UserName:</label>
+        <input type="text" placeholder="Enter Username" name="username">
+        <label for="password">Password:</label>
+        <input type="password" placeholder="Enter PassWord" name="password">
+
+        <input type="submit" value="Submit">
+
+    </form>
+    <p>Haven't signed up yet? <a href="{%url 'register'%}">Sign up</a></p>
+</div>
+{%else%}
+<div>
+    <form action="" method="post">
+        {%csrf_token%}
+
+
+        <input type="submit" value="Register">
+
+    </form>
+    <p>Already signed in? <a href="{%url 'login'%}">Sign in</a></p>
+</div>
+{%endif%}
+
+views.py
+def registerUser(request):
+   page='register'
+
+   context={'page':page}
+   return render(request,'studyapp/login_register.html',context)
+
+also add page='login' in def loginUser
+
+
+we'll create inbuilt form for the register form 
+views.py
+from django.contrib.auth.forms import UserCreationForm
+
+
+
+
 
 
 
