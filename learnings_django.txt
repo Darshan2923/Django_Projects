@@ -771,6 +771,85 @@ main.html
 
 
 
+************Now, Let's work on the Django REST Framework baaki kaa baadme karege******************
+Make new 4 folders in the same project
+1.studyapp ke andar> __init__.py 
+                   >urls.py
+                   >views.py
+                   >serializers.py
+
+views.py
+from django.http import JsonResponse
+
+def getRoutes(request):
+    routes=[
+        'GET /api',
+        'GET /api/rooms',
+        'GET /api/rooms/:id',
+    ]
+    return JsonResponse(routes,safe=False)
+
+urls.py(studyapp/api)
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('',views.getRoutes)
+]
+
+urls.py(studyproject)
+Add this     path('api/',include('studyapp.api.urls')),
+
+
+********Now we can use this by putting /api into our app
+
+
+****Download Django REST Framework
+pip install djangorestframework
+
+settings.py
+INSTALLED_APPS=[
+    ```
+    'rest_framework',
+    ```
+]
+
+views.py
+# from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['GET'])
+def getRoutes(request):
+    routes=[
+        'GET /api',
+        'GET /api/rooms',
+        'GET /api/rooms/:id',
+    ]
+    return Response(routes)
+    # return JsonResponse(routes,safe=False)
+
+
+@api_view(['GET'])
+def getRooms(request):
+    rooms=Room.objects.all()
+    return Response(rooms)
+
+urls.py me add kar dijiyo
+
+but we get this error --> TypeError Object of type Room is not JSON serializable
+
+To fix this...
+
+
+
+
+
+
+
+
+
+
 
 
 
