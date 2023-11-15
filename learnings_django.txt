@@ -860,6 +860,19 @@ def getRooms(request):
     return Response(serializer.data)
 
 
+*********For single room based on the id
+@api_view(['GET'])
+def getRoom(request,pk):
+    room=Room.objects.get(id=pk)
+    serializer=RoomSerializer(room,many=False)
+    return Response(serializer.data)
+
+Add urls as well for the same
+
+
+*****NextUp, we'll add cross origin resource sharing (cors) for frontend client to access your api
+
+
 
 
 
