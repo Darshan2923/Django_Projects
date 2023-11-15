@@ -839,8 +839,25 @@ urls.py me add kar dijiyo
 
 but we get this error --> TypeError Object of type Room is not JSON serializable
 
+kyuki objects python me hai aur json me convert karne padege naa meri jaan
+
 To fix this...
 
+serializers.py
+from rest_framework.serializers import ModelSerializer
+from studyapp.models import Room
+
+class RoomSerializer(ModelSerializer):
+    class Meta:
+        model=Room
+        fields='__all__'
+
+views.py
+@api_view(['GET'])
+def getRooms(request):
+    rooms=Room.objects.all()
+    serializer=RoomSerializer(rooms,many=True)
+    return Response(serializer.data)
 
 
 
