@@ -1,0 +1,8 @@
+Part 1: Project Setup and templates
+1.Configure Apps:Do little of settings stuff
+2.Create Templates folder and templates
+3.Views and Urls Configuration for app and Project
+4.Static Files: CSS and Img Files
+5.Main Template:Add html boilerplate,bootstrap,Container and Inheriting
+6.Navbar: Bootstrap for outer css and custom css 
+7.Store.html,Cart.html,Checkout.html
