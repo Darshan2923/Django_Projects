@@ -17,3 +17,11 @@ Part2:Data structure
     step6:admin.py
     step7:Add some custom products to admin panel
 2.Render Products
+    step1:Query Products
+    views.py
+    def store(request):
+        products=Product.objects.all()
+        context={'products':products}
+        return render(--""--)
+    step2:Render Products
+    
