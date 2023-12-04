@@ -6,3 +6,14 @@ Part 1: Project Setup and templates
 5.Main Template:Add html boilerplate,bootstrap,Container and Inheriting
 6.Navbar: Bootstrap for outer css and custom css 
 7.Store.html,Cart.html,Checkout.html
+
+Part2:Data structure
+1.Models
+    step1:Import User Model
+    step2:Customer Model
+    step3:"Product","order","OrderItem" Models
+    step4:Shipping Model
+    step5:Migrate database
+    step6:admin.py
+    step7:Add some custom products to admin panel
+2.Render Products
