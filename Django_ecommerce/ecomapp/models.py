@@ -38,7 +38,7 @@ class Order(models.Model):
     
     @property
     def get_total(self):
-        total=self.product_price*self.quantity
+        total=self.product.price*self.quantity
         return total
     
 #Note Foreign Key is many to one relationaship. Lol!!
