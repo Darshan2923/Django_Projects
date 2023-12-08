@@ -1,3 +1,18 @@
+Note:
+    This project will consist of 6 Models, so let's summarize each one:
+
+    1. USER - Built in Django user model,  instance created for each customer who registers.
+
+    2. CUSTOMER - Along with a User model, each customer will contain a Customer model that holds a one to one relationship to each user. (OneToOneFied)
+
+    3. PRODUCT - The product model represents product types we have in store.
+
+    4. ORDER - The order model will represent a transaction that is placed or pending. The model will hold information such as the transaction ID, data completed and order status. This model will be a child or the customer model but a parent to Order Items.
+
+    5. ORDERITEM - An order Item is one item with an order. For example, a shopping cart may consist of many items but is all part of one order. Therfore the OrderItem model will be a child of the PRODUCT model AND the ORDER Model.
+
+    6. SHIPPING - Not every order will need shipping information. For orders containing physical products that need to be shipping we will need to create an instance of the shipping model to know where to send the order. Shipping will simply be a child of the order model when necessary.
+
 Part 1: Project Setup and templates
 1.Configure Apps:Do little of settings stuff
 2.Create Templates folder and templates
@@ -23,5 +38,125 @@ Part2:Data structure
         products=Product.objects.all()
         context={'products':products}
         return render(--""--)
-    step2:Render Products
+
+ 
+
+Part2:Render Products
+    Step1:Query Products
+    Step2:Render Products
+
+Part3:Product Image Field
+    Step1:ImageField() in models.py
+        Note: Dont put images in the static files yet put it somewhere else so we want to make it dynamic
+        -Add ImageField() to models.py
+        -pip install pillow
+    Step2:MEDIA_ROOT
+    for configuring out file for images to be uploaded to.
+        settings.py
+            MEDIA_ROOT=BASE_DIR/'static/img'
+            this will set the path for all media files to be uploaded to
+
+            ab jaise hi toh admin se images add karega, tere vo images automatically img file me store ho jaayege
+    step3:MEDIA_URL
+    settings.py
+        MEDIA_URL='/images'
+    step4:Urls.py config
+        urls.py(ecomproj)
+                from django.contrib import admin
+                from django.urls import path,include
+                import ecomapp
+                from ecomapp import urls
+
+                from django.conf.urls.static import static
+                from django.conf import settings
+
+                urlpatterns = [
+                    path('admin/', admin.site.urls),
+                    path('',include(ecomapp.urls))
+                ]
+
+                urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+
+
+            Ab agar hum individual images chahte hai toh bhi inconsistency nai add hoga:
+            http://127.0.0.1:8000/images/watch.jpg ye karne pe upload kiye hue watch ka image hi aayega
+
+
+    step5:render the images
+        in store.html, do {{product.image.url}}
+
+    step6:Image attribute error solution
+        models.py(Product model)
+            @property
+            def imageURL(self):
+                try:
+                    url=self.image.url
+                except:
+                    url=''
+                return url
+
+        store.html
+         change to: {{product.imageURL}}
+
+    step7:User cart
+        step1:Add data(admin panel)
+            Create a customer,orderitem and order randomly on admin panel
+        step2:Query data(Cart)
+            views.py
+                def cart(request):
+                    if request.user.is_authenticated:
+                        customer=request.user.customer
+                        order,created=Order.objects.get_or_create(customer=customer,complete=False)
+                        items=order.orderitem_set.all()
+                    else:
+                        items=[]
+                    context={'items':items}
+        step3:Render the data(cart.html)
+        just change the html in that as in:
+        for item in items...
+            {{item.product.imageURL}},{{item.product.name}},{{item.quantity}} and {{item.product.price | floatformat:2}}
+        step4:Calculating totals
+            we'll create an method for our orderitem models.py shit
+            class OrderItem(models.Model):
+                ---""---
+                @property
+                def get_total(self):
+                    total=self.product_price*self.quantity
+                    return total
+
+            And...
+            class Order(models.Model):
+            ---""---
+            @property
+            def get_cart_total(self):
+                orderitems=self.orderitem_set.all()
+                total=sum([item.get_total for item in orderitems])
+                return total
+            @property
+            def get_cart_items(self):
+                orderitems=self.orderitem_set.all()
+                total=sum([item.quantity for item in orderitems])
+                return total
+            
+            cart.html me
+            render:
+                {{item.get_total}},{{order.get_cart_items}},{{order.get_cart_total}},etc...
+
+
+            for unbound local error for unlogined user,
+            in else part of cart function in view.py,
+            add
+            
+            else:
+                items=[]
+                order={'get_cart_items':0,'get_cart_total':0}
+        step5:Query totals
+        completed
+        step6:Render totals
+        completed
+        step7:Checkout page data
+        same exact view for checkout same as cart
+            render cart data in checkout.html {{}} ye wala cheez
     
