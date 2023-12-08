@@ -90,6 +90,7 @@ Part3:Product Image Field
     step6:Image attribute error solution
         models.py(Product model)
             @property
+#Note: It's an attribute rather than a method due to presence of @property above
             def imageURL(self):
                 try:
                     url=self.image.url
