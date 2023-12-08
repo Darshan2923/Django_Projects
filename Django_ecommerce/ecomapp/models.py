@@ -38,8 +38,8 @@ class Order(models.Model):
     
     @property
     def get_total(self):
-        total=self.product.price*self.quantity
-        return total
+        item_total=self.product.price*self.quantity
+        return item_total
     
 #Note Foreign Key is many to one relationaship. Lol!!
 
@@ -55,13 +55,13 @@ class OrderItem(models.Model):
     @property
     def get_cart_total(self):
         orderitems=self.orderitem_set.all()
-        total=sum([item.get_total for item in orderitems])
-        return total
+        cart_total=sum([item.get_total for item in orderitems])
+        return cart_total
     @property
     def get_cart_items(self):
         orderitems=self.orderitem_set.all()
-        total=sum([item.quantity for item in orderitems])
-        return total
+        cart_items=sum([item.quantity for item in orderitems])
+        return cart_items
     
 class ShippingAddress(models.Model):
     customer=models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True)
