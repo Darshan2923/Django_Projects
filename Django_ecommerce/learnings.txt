@@ -160,4 +160,26 @@ Part3:Product Image Field
         step7:Checkout page data
         same exact view for checkout same as cart
             render cart data in checkout.html {{}} ye wala cheez
-    
+
+
+Part 3:Site Functionality
+We'll make use of js and eventlisteners to listen to the button clicked...
+Step1:Cart.html-Create js folder in static and add js script link
+        add to store.html:   <button data-product={{product.id}} data-action="add"...
+        ye js me kaam aayega when you do this.dataset.product aur this.dataset.action
+        Now we know ki ho raha hai bc console me click karege toh id aur action aayega
+
+Step3: Use type logic using js
+    We need to authenticate user to do the shit different for logged in and not user
+    index.html
+        <script type="text/javascript" src="{% static 'js/cart.js' %}">
+        var user = '{{request.user}}'
+    </script>
+     add in cart.js
+     console.log('User:',user);
+     if(user=='AnonymousUser'){
+        console.log('User is not authenticated')
+     }
+     else{
+        console.log('User authenticated')
+     }
