@@ -1,4 +1,6 @@
 Note:
+
+*****script body tag ke end me hi daalna warna chalega hi nai bilkul 2 din baithne ke baad bol raha
     This project will consist of 6 Models, so let's summarize each one:
 
     1. USER - Built in Django user model,  instance created for each customer who registers.
@@ -183,3 +185,13 @@ Step3: Use type logic using js
      else{
         console.log('User authenticated')
      }
+
+Step4:updateItem view
+    When logged in user clicks 'add to cart' we want to send data to view to handle it
+    we'll create a view called update item
+    from django.http import JsonResponse
+
+    def updateItem(request):
+        return JsonResponse('Item was added',safe=False);
+
+    create a url for the same thing
