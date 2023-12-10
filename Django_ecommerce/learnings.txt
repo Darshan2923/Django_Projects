@@ -195,3 +195,74 @@ Step4:updateItem view
         return JsonResponse('Item was added',safe=False);
 
     create a url for the same thing
+    Create user function in cart.js (updateUserOrder):
+     
+     else{
+        updateUserOrder(productId,action);
+     }
+
+     function updateUserOrder(productId,action){
+       console.log("User is authenticated,sending data...");
+       var url = '/update_item/'
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 'productId': productId, 'action': action })
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Data:', data)
+        });
+     }
+
+
+        
+Ye wala error aayega bc karege tabhi so we'll add csrf token wala code ajax csrf token django search karke milega vo        
+       POST http://127.0.0.1:8000/update_item/ 403 (Forbidden)
+updateUserOrder @ cart.js:26
+(anonymous) @ cart.js:16
+VM172:2 Uncaught (in promise) SyntaxError: Unexpected token '<', "
+<!DOCTYPE "... is not valid JSON
+
+
+Step5:updateItem view logic
+view.py
+def updateItem(request):
+	data=json.loads(request.body)
+	productId=data['productId']
+	action=data['action']
+	print('Action: ',action)
+	print('productId: ',productId)
+
+	customer=request.user.customer
+	product=Product.objects.get(id=productId)
+	order,created=Order.objects.get_or_create(customer=customer,complete=False)
+	orderItem,created=OrderItem.objects.get_or_create(order=order,product=product)
+
+	if action=='add':
+		orderItem.quantity=(orderItem.quantity+1)
+	if action=='remove':
+		orderItem.quantity=(orderItem.quantity-1)
+
+	orderItem.save()
+
+	if orderItem.quantity<=0:
+		orderItem.delete()
+	return JsonResponse('Item was added',safe=False)
+
+
+#########################3All work perfectly when add item is clicked...
+
+step6:Cart Total(red point on top of cart icon)
+
+We can use rest api to handle this shit, but for now, we'll pass getcartitems in every view of page and change {{0}} to {{cartItems}}
+views.py
+def store(request):
+''''''-----'''''
+cartItems=order.get_cart_items
+context={----''---}
