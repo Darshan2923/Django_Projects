@@ -86,5 +86,11 @@ def updateItem(request):
 def processOrder(request):
 	print('Data: ',request.body)
 	transaction_id=datetime.datetime().timestamp()
-	return JsonResponse('Payment submitted...',safe=Fasle)
+	date=json.loads(request.body)
+
+	if request.user.is_authenticated:
+		customer=request.user.customer
+		order,created=Order.objects.get_or_create(customer=customer,complete=False)
+
+	return JsonResponse('Payment submitted...',safe=False)
 

@@ -408,9 +408,17 @@ Step6:Process Order
     import datetime
     2)Set Transaction ID variable
     def processOrder(request):
-        transaction_id=datetime.datetime().timestamp()
-        return JsonResponse('Payment Submitted...',safe=False)
+	print('Data: ',request.body)
+	transaction_id=datetime.datetime().timestamp()
+	date=json.loads(request.body)
 
+	if request.user.is_authenticated:
+		customer=request.user.customer
+		order,created=Order.objects.get_or_create(customer=customer,complete=False)
+
+	return JsonResponse('Payment submitted...',safe=False)
+
+    3)
 
 
 
