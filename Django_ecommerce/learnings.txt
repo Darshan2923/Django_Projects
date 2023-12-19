@@ -422,7 +422,29 @@ Step6:Process Order
 
 
     3)Confirm Total
-    
+    if request.user.is_authenticated:
+    -------""------
+
+    if total==order.get_cart_total:
+        order.complete=True
+    order.save()
+
+    4)Shipping logic
+
+    if total==order.get_cart_total:
+        order.complete=True
+    order.save()
+
+    if order.shipping==True:
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            adress=data['shipping']['address'],
+            city=data['shipping']['city'],
+            state=data['shipping']['state'],
+            zipcode=data['shipping']['zipcode'],
+        )
+
 
 
 
