@@ -284,3 +284,9 @@ Step2:Shipping Address addition
                     if i.product.digital==False:
                         shipping=True
                 return shipping
+        
+        Part2:Order Shipping Status
+        add 'shipping'=False to non logged in user 
+
+        Part3:Hiding Shipping Form using javascript
+

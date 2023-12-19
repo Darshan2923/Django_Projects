@@ -59,6 +59,11 @@
     <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
     <script type="text/javascript">
         let user = '{{ request.user }}';
+        var shipping = '{{order.shipping}}'
+
+        if (shipping == 'False') {
+            document.getElementById('shipping-info').innerHTML = ''
+        }
         // Now you can use the 'user' variable in your inline script.
 
         //csrf_token for forbidden access to data in json
