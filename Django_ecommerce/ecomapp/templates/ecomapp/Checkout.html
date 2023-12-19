@@ -95,5 +95,15 @@
         console.log("Payment button clicked")
     }
 
+    if (user != "AnonymousUser") {
+        document.getElementById('user-info').innerHTML = ''
+    }
+    if (shipping == 'False' && user != 'AnonymousUser') {
+        //Hide entire form if user us logged in and shipping is false
+        document.getElementById('form-wrapper').classList.add("hidden")
+        //Show Payment if logged in user wants buy a item that does not require shipping
+        document.getElementById('payment-info').classList.remove("hidden")
+    }
+
 </script>
 {% endblock content %}
