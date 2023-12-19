@@ -289,4 +289,22 @@ Step2:Shipping Address addition
         add 'shipping'=False to non logged in user 
 
         Part3:Hiding Shipping Form using javascript
+        Add javascript to checkout.html
+            var shipping = '{{order.shipping}}'
+
+        if (shipping == 'False') {
+            document.getElementById('shipping-info').innerHTML = ''
+        }
+
+        Part4:Payment Option button
+        Add payment wrapper just after the continue button is clicked
+        1) Add eventlisteners in checkout.html
+            var form=document.getElementById('form')
+            form.addEventListener('submit',function(e){
+                e.preventDefault()
+                console.log("Form Submitted...")
+                document.getElementById('form-button').classList.add("hidden");
+                document.getElementById('payment-info').classList.remove("hidden"); 
+            })
+
 
