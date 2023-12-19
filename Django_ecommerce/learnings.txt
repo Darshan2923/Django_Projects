@@ -266,3 +266,21 @@ def store(request):
 ''''''-----'''''
 cartItems=order.get_cart_items
 context={----''---}
+
+
+Part2:Update Cart Items
+Step1:Add data-product and data-action to up and down arrow images
+        as we're looping through the item, we'll use item.product.id
+                 <img data-product="{{item.product.id}}" data-action="add" class="update-cart chg-quantity" src="{% static  'img/up_arrow.png' %}">
+                 Ye kaam kar raha hai views me updateitem karke function hai jo update kar raha hai bc
+Step2:Shipping Address addition
+        Part1:Add Shipping property to the Order model
+        Here we'll add shipping for only physical products and not digital products
+            @property
+            def shipping(self):
+                shipping=False
+                orderitems=self.orderitem_set.all()
+                for i in orderitems:
+                    if i.product.digital==False:
+                        shipping=True
+                return shipping
