@@ -403,6 +403,14 @@ Step6:Process Order
         window.location.href="{% url 'store' %}"
     })
 
+    Part3:Transaction ID
+    1) Import Datetime(views.py)
+    import datetime
+    2)Set Transaction ID variable
+    def processOrder(request):
+        transaction_id=datetime.datetime().timestamp()
+        return JsonResponse('Payment Submitted...',safe=False)
+
 
 
 

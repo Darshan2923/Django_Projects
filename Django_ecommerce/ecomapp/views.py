@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse
 from .models import *
 from django.http import JsonResponse
 import json
+import datetime
 
 # Create your views here.
 def index(request):
@@ -84,5 +85,6 @@ def updateItem(request):
     
 def processOrder(request):
 	print('Data: ',request.body)
+	transaction_id=datetime.datetime().timestamp()
 	return JsonResponse('Payment submitted...',safe=Fasle)
 
