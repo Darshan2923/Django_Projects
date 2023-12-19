@@ -307,4 +307,24 @@ Step2:Shipping Address addition
                 document.getElementById('payment-info').classList.remove("hidden"); 
             })
 
+        2)Add Payment button
+            Inside payment-info wrapper; let's add a button with id of "make-payment".This will be placeholder that will trigger orders to be processed until we get to payment integration module.
+            <div class="box-element hidden" id="payment-info">
+                <small>Payment Options</small>
+                <button id="make-payment">Make payment</button>
+                </div>
+
+        Part5:Trigger Payment Option
+        For time being we'll function a random console
+
+        document.getElementById('make-payment').addEventListener('click',function(e){
+            submitFormData()
+        })
+        function submitFormData(){
+            console.log("Payment button clicked")
+        }
+
+Step4:CheckOut Form
+        Part1:Hide form or fields
+
 
