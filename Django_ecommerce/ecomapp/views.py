@@ -86,11 +86,13 @@ def updateItem(request):
 def processOrder(request):
 	print('Data: ',request.body)
 	transaction_id=datetime.datetime().timestamp()
-	date=json.loads(request.body)
+	data=json.loads(request.body)
 
 	if request.user.is_authenticated:
 		customer=request.user.customer
 		order,created=Order.objects.get_or_create(customer=customer,complete=False)
+		total=float(data['form']['total'])
+		order.transaction_id=transaction_id
 
 	return JsonResponse('Payment submitted...',safe=False)
 
