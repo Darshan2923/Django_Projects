@@ -337,6 +337,74 @@ Step4:CheckOut Form
         document.getElementById('payment-info').classList.remove("hidden")
     }
 
-        
+Step5:Form Data
+    When payment button is submitted,we want to send 3 things to backend for processing the order
+    1-Cart total
+    <script type="text/javascript">
+    var shipping='{{shipping}}'
+    var total='{{order.get_cart_total|floatformat:2}}'
+    </script>
+
+    2-User information(If user is not logged in)
+    function submitFormData(){
+        console.log('Payment button clicekd')
+
+        var userFormData={
+            'name':null,
+            'email':null,
+            'total':total,
+        }
+        var shippingInfo={
+            'address':null,
+            'city':null,
+            'state':null,
+            'zipcode':null,
+        }
+    }
+
+    if(shipping!="False"){
+        shippingInfo.address=form.address.value
+        shippingInfo.city=form.city.value
+        shippingInfo.state=form.state.value
+        shippingInfo.zipcode=form.zipcode.value
+    }
+    if(user=='AnonymousUser'){
+        userFormData.name=form.name.value
+        userFormData.email=form.email.value
+    }
+    console.log("Shipping Info: ',shippingInfo)
+    console.log("User Info: ',userFormData)
+    3-Shipping Address(If item in order needs shipping)
+
+Step6:Process Order
+    Part1:Process order viewurl
+        views.py
+        def processOrder(request):
+            return JsonResponse('Payment submitted...',safe=Fasle)
+
+        url path
+        path('process_order/',views.processOrder,name='process_order')
+
+    Part2:Send POST Data
+    checkout.html (in that function submit wala below if(user=="AnonymousUser"))
+    var url='/process_order'
+    fetch(url,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'X-CSRFToken':csrftoken,
+        },
+        body:JSON.stringify({'form':userFormData,'shipping':shippingInfo}),
+    })
+    .then((response)=>response.json())
+    .then((data)=>{
+        console.log('success: ",data);
+        alert("Transacxtion completed!!!");
+        window.location.href="{% url 'store' %}"
+    })
+
+
+
+
 
 
