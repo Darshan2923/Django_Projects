@@ -445,7 +445,11 @@ Step6:Process Order
             zipcode=data['shipping']['zipcode'],
         )
 
+RelatedObjectDoesNotExist at / aa raha tha that was because of other superuser signin jisne koi order yaa interaction nai kiya tha before
+chatgpt se pichle wale ka change kiya password then it worked
 
+
+Part5:Creating CSRF token changes:
 
 
 
