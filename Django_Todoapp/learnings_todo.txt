@@ -1,0 +1,1 @@
+--Actually project file ke andar jaake runserver karna hota hai, par mai andar ke manage.py ko bahar laake bakchodi karta hu lol
