@@ -1,1 +1,11 @@
 --Actually project file ke andar jaake runserver karna hota hai, par mai andar ke manage.py ko bahar laake bakchodi karta hu lol
+
+--NextUp Create a react integrated django app in seconds
+
+-Create Django project
+-Create React app "npx create-react-app"
+-Drag react app into root directory of django project
+-Configure Templates engine
+-Configure url path
+-configure static files
+-cd into react app and "npm run build"
