@@ -30,7 +30,8 @@ def updateTask(request,pk):
     context={'form':form}
     return render(request,'todoapp/update_task.html',context)
 
-def deleteTask(request,pk):
-    
-    context={}
-    return render(request,'todoapp/delete.html',context)
+
+def deleteTask(request, pk):
+    item = Task.objects.get(id=pk)
+    item.delete()
+    return redirect('/')
