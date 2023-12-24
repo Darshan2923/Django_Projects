@@ -8,7 +8,17 @@
 </head>
 
 <body>
-    Hello i am bombastic coder
+    <h3>To do </h3>
+    <form action="/" method="POST">
+        {csrf_token}
+        {{form.task}}
+        <input type="submit" name="Create Task">
+    </form>
+    {% for task in tasks %}
+    <div>
+        <p>{{task}}</p>
+    </div>
+    {% endfor %}
 </body>
 
 </html>
