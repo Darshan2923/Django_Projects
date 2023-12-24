@@ -10,8 +10,8 @@
 <body>
     <h3>To do </h3>
     <form action="/" method="POST">
-        {csrf_token}
-        {{form.task}}
+        {% csrf_token %}
+        {{form.title}}
         <input type="submit" name="Create Task">
     </form>
     {% for task in tasks %}

@@ -7,5 +7,8 @@ class Task(models.Model):
     completed=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering=['-created']
+
     def __str__(self):
         return str(self.title)
