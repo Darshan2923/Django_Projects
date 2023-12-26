@@ -4,7 +4,8 @@ from .models import *
 # Create your views here.
 
 def index(request):
-    context={}
+    notes=Description.objects.all()
+    context={'notes':notes}
     return render(request,'notesapp/index.html',context)
 
 
