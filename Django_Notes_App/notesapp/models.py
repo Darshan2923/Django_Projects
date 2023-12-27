@@ -10,6 +10,9 @@ class Notes(models.Model):
     def __str__(self):
         return self.title
         # return self.body[0:69]
+    
+    class Meta:
+        ordering=['title']
 
 # class Title(models.Model):
 #     title=models.CharField(max_length=200)
