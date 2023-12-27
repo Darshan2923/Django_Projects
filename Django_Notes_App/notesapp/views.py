@@ -30,12 +30,12 @@ def login_page(request):
         try:
             username=request.POST.get('username')
             password=request.POST.get('password')
-            user_obj=User.objects.filter(username=username)
+            user_obj = User.objects.filter(username=username).first()
             if not user_obj.exists():
-                messages.error("Username not found")
+                messages.error(request,"Username not found")
                 return redirect('/login/')
-            user_obj=authenticate(username=username,password=password)
-            if user_obj:
+            user_authenticated = authenticate(username=username, password=password)
+            if user_authenticated:
                 login(request,user_obj)
                 return redirect('/')
             messages.error(request,'Wrong password')
@@ -50,6 +50,12 @@ def register_page(request):
         try:
             username=request.POST.get('username')
             password=request.POST.get('password')
+
+            # Validate input
+            if not username or not password:
+                messages.error(request, "Please fill in all the fields.")
+                return redirect('/register/')
+
             user_obj=User.objects.filter(username=username)
             if user_obj.exists():
                 messages.error(request,"Username already exists!!")
