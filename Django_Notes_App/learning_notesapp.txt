@@ -1,0 +1,21 @@
+-Made model wiith foreignkey of title and description. Have much problem so
+changed the model itself.
+
+-Adding login and register
+
+
+Steps to make a login view
+1.if method=='POST' open try except block
+2.get username and password and user_obj= filter the User model to check whether username exists
+3.if not user_obj.exists():- message.error and redirect
+4.user_obj authenticate username and password
+5.if (user_obj) login(username,password) and redirect else error and redirect
+
+Steps to make register views
+1.if method=='POST' open try except block
+2.get username and password and user_obj= filter the User model to check whether username exists
+3. if user_obj.exists(): username already exists redirects
+4.user_obj=User.objects.create(username=username)
+user_obj.set_password(password)
+user_obj.save()
+redirect()

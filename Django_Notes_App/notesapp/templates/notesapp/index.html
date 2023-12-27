@@ -8,6 +8,9 @@
 </head>
 
 <body>
+    <h1><a href="{% url 'index' %}">Logo</a></h1>
+    <a href="{% url 'logout_page' %}">Logout</a>
+    <hr>
     {% for note in notes %}
     <h4>{{note.title}}</h4>
     <h6>{{note.body}}</h6>
