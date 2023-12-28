@@ -1,0 +1,19 @@
+Creating a documentation for things i have learnt while making this:
+models.py
+we make three models for:
+1.Profile-user
+         -image
+         -bio
+         -facebook
+         -instagram
+         -linkedin
+2.BlogPost-title
+          -author
+          -slug
+          -image
+          -datetime
+3.Comment-user
+         -content
+         -blog
+         -parent
+         -dateTime
