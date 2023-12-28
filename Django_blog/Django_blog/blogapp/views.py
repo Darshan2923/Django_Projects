@@ -34,25 +34,24 @@ def register_page(request):
 
 def login_page(request):
     if request.method=='POST':
-      try:
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-        user_obj=User.objects.filter(username=username)
-        if not user_obj.exists():
-            messages.error(request,"Username does not exists!!!")
+        try:
+            username=request.POST.get('username')
+            password=request.POST.get('password')
+            user_obj = User.objects.filter(username=username).first()
+            if not user_obj.exists():
+                messages.error(request,"Username not found")
+                return redirect('/login/')
+            user_authenticated = authenticate(username=username, password=password)
+            if user_authenticated:
+                login(request,user_obj)
+                return redirect('/')
+            messages.error(request,'Wrong password')
             return redirect('/login/')
-        user_obj=authenticate(username,password)
-        if user_obj.is_authenticated():
-           login(request,user_obj)
-           messages.success(request,"User logged in successfully!!")
-           return redirect('/')
-        messages.error("Passwords Doesnt match!!")
-
-      except Exception as e:
-         messages.error(request,"Something went wrong!")
-         return redirect('/login/')
+        except Exception as e:
+            messages.error(request,"Something went wrong")
+            return redirect('/login/')
     return render(request,'blogapp/login_page.html')
- 
+
 
 def logout_user(request):
     logout(request)
