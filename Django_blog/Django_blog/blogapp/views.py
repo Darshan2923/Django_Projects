@@ -4,6 +4,7 @@ from django.contrib.auth import login,authenticate,logout
 from .models import *
 from django.contrib import messages
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -13,6 +14,21 @@ def index(request):
     posts = BlogPost.objects.filter().order_by('-datetime')
     context={'posts':posts}
     return render(request,'blogapp/index.html',context)
+
+@login_required(login_url='/login')
+def add_blogs(request):
+    if request.method=='POST':
+        form=BlogPostForm(data=request.POST,files=request.FILES)
+        if form.is_valid():
+            blogpost=form.save(commit=False)
+            blogpost.author=request.user
+            blogpost.save()
+            obj=form.instance
+            alert=True
+            return render(request,'blogapp/add_blogs.html',{'obj':obj,'alert':alert})
+        else:
+            form=BlogPostForm()
+    return render(request,'blogapp/add_blogs.html',{'form':form})
 
 def edit_profile(request):
     form = None  # Initialize form outside the try block
