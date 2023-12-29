@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from .models import *
 from django.contrib import messages
+from .forms import *
 
 # Create your views here.
 
@@ -10,6 +11,25 @@ from django.contrib import messages
 def index(request):
     context={}
     return render(request,'blogapp/index.html',context)
+
+def edit_profile(request):
+    try:
+        profile=request.user.profile
+    except Profile.DoesNotExist:
+        profile=Profile(user=request.user)
+    if request.method=='POST':
+        form=ProfileForm(data=request.POST,files=request.FILES,instance=profile)
+        if form.is_valid():
+            form.save()
+            alert=True
+            return render(request,'edit_profile.html',{'alert':alert})
+        else:
+            form=ProfileForm(instance=profile)
+        return render(request,'edit_profile.html',{'form':form})
+
+
+def profile_page(request):
+    return render(request,'blogapp/profile.html')
 
 def register_page(request):
     if request.method=='POST':
