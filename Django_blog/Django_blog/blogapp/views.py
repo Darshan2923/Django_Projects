@@ -9,23 +9,28 @@ from .forms import *
 
 
 def index(request):
-    context={}
+    posts = BlogPost.objects.all()
+    posts = BlogPost.objects.filter().order_by('-datetime')
+    context={'posts':posts}
     return render(request,'blogapp/index.html',context)
 
 def edit_profile(request):
+    form = None  # Initialize form outside the try block
     try:
-        profile=request.user.profile
+        profile = request.user.profile
+        form = ProfileForm()
     except Profile.DoesNotExist:
-        profile=Profile(user=request.user)
-    if request.method=='POST':
-        form=ProfileForm(data=request.POST,files=request.FILES,instance=profile)
+        profile = Profile(user=request.user)
+    if request.method == 'POST':
+        form = ProfileForm(data=request.POST, files=request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            alert=True
-            return render(request,'edit_profile.html',{'alert':alert})
-        else:
-            form=ProfileForm(instance=profile)
-        return render(request,'edit_profile.html',{'form':form})
+            alert = True
+            return render(request, 'blogapp/edit_profile.html', {'alert': alert})
+    else:
+        # Move this line outside the else block
+        form = ProfileForm(instance=profile)
+    return render(request, 'blogapp/edit_profile.html', {'form': form})
 
 
 def profile_page(request):
