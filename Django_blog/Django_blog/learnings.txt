@@ -36,3 +36,13 @@ Steps to make register views
 user_obj.set_password(password)
 user_obj.save()
 redirect()
+
+All things done during this project:
+base.html(navbar)
+models.py(Created profile,blogpost,Comment)
+registration page and its view
+login page and its view
+profile.html and its view
+edit_profile.html, forms.py and their view
+
+

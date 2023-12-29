@@ -32,44 +32,42 @@ def profile_page(request):
     return render(request,'blogapp/profile.html')
 
 def register_page(request):
-    if request.method=='POST':
-        username=request.POST.get('username')
-        email=request.POST.get('email')
-        password=request.POST.get('password')
-        first_name=request.POST.get('first_name')
-        last_name=request.POST.get('last_name')
-        user_obj=User.objects.filter(username=username)
-        if user_obj.exists():
-          messages.error("User already exists!!")
-          return redirect('/login/')
-        user = User.objects.create_user(username, email, password)
+    if request.method=="POST":   
+        username = request.POST['username']
+        email = request.POST['email']
+        first_name=request.POST['first_name']
+        last_name=request.POST['last_name']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+            return redirect('/register')
+        
+        user = User.objects.create_user(username, email, password1)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
+        return render(request, 'blogapp/login_page.html')   
         # user_obj=User.objects.user(username=username)
         # user_obj.set_password(password)
-        return redirect('/login/')
 
     return render(request,'blogapp/register_page.html')
 
 def login_page(request):
-    if request.method=='POST':
-        try:
-            username=request.POST.get('username')
-            password=request.POST.get('password')
-            user_obj = User.objects.filter(username=username).first()
-            if not user_obj.exists():
-                messages.error(request,"Username not found")
-                return redirect('/login/')
-            user_authenticated = authenticate(username=username, password=password)
-            if user_authenticated:
-                login(request,user_obj)
-                return redirect('/')
-            messages.error(request,'Wrong password')
-            return redirect('/login/')
-        except Exception as e:
-            messages.error(request,"Something went wrong")
-            return redirect('/login/')
+    if request.method=="POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Successfully Logged In")
+            return redirect("/")
+        else:
+            messages.error(request, "Invalid Credentials")
+        return render(request, 'blogapp/index.html')  
     return render(request,'blogapp/login_page.html')
 
 
