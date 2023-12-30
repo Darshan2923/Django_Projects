@@ -20,6 +20,18 @@ def blogs(request):
     posts = BlogPost.objects.filter().order_by('-dateTime')
     return render(request, "blogapp/blog.html", {'posts':posts})
 
+def blogs_comments(request, slug):
+    post = BlogPost.objects.filter(slug=slug).first()
+    comments = Comments.objects.filter(blog=post)
+    if request.method=="POST":
+        user = request.user
+        content = request.POST.get('content','')
+        blog_id =request.POST.get('blog_id','')
+        comment = Comments(user = user, content = content, blog=post)
+        comment.save()
+    return render(request, "blogapp/blog_comments.html", {'post':post, 'comments':comments})
+
+
 @login_required(login_url='/login')
 def add_blogs(request):
     form=BlogPostForm()

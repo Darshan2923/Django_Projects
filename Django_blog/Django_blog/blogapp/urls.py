@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     #blogs
     path('',views.index,name='index'),
-    #  path("blog/<str:slug>/", views.blogs_comments, name="blogs_comments"),
+     path("blog/<str:slug>/", views.blogs_comments, name="blogs_comments"),
     path('add_blogs/',views.add_blogs,name='add_blogs'),
 
     #profile

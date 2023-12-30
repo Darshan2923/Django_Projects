@@ -20,7 +20,7 @@ class BlogPost(models.Model):
     title=models.CharField(max_length=200)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
     slug=models.CharField(max_length=130)
-    content=models.TextField(blank=True,null=True)
+    content=models.TextField()
     image=models.ImageField(upload_to='profile_pics',blank=True,null=True)
     datetime=models.DateTimeField(auto_now_add=True)
 
@@ -32,11 +32,11 @@ class BlogPost(models.Model):
 
 class Comments(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    content=models.TextField(blank=True,null=True)
+    content=models.TextField()
     blog=models.ForeignKey(BlogPost,on_delete=models.CASCADE)
     parent=models.ForeignKey('self',on_delete=models.SET_NULL,blank=True,null=True)
     dateTime=models.DateTimeField(default=now)
 
     def __str__(self):
-        return str(self.user)+"Comments: "+self.content
+        return str(self.user.username)+"Comments: "+self.content
 
