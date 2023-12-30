@@ -41,9 +41,7 @@ def add_blogs(request):
             blogpost = form.save(commit=False)
             blogpost.author = request.user
             blogpost.save()
-            obj = form.instance
-            alert = True
-            return render(request,'blogapp/add_blogs.html',{'obj':obj,'alert':alert})
+            return redirect('/')
         else:
             form=BlogPostForm()
     return render(request,'blogapp/add_blogs.html',{'form':form})
