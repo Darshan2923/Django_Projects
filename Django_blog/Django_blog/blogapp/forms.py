@@ -5,6 +5,13 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model=Profile
         fields=('phone_no','bio','facebook','instagram','linkedin','image')
+        widgets = {
+            'phone_no': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Add Your Phone No. Here'}),
+            'bio': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Add Your Bio Here'}),
+            'facebook': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Add Your Facebook Profile Here'}),
+            'instagram': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Add Your Instagram Profile Here'}),
+            'linkedin': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Add Your Linkedin Profile Here'}),
+        }
 
 class BlogPostForm(forms.ModelForm):
     class Meta:

@@ -15,8 +15,14 @@ def index(request):
     context={'posts':posts}
     return render(request,'blogapp/index.html',context)
 
+def blogs(request):
+    posts = BlogPost.objects.all()
+    posts = BlogPost.objects.filter().order_by('-dateTime')
+    return render(request, "blogapp/blog.html", {'posts':posts})
+
 @login_required(login_url='/login')
 def add_blogs(request):
+    form=BlogPostForm()
     if request.method=='POST':
         form = BlogPostForm(data=request.POST, files=request.FILES)
         if form.is_valid():

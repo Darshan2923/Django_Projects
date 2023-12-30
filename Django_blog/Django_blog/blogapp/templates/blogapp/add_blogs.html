@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'blogapp/base.html' %}
 {% block content %}
 <form action="/add_blogs/" enctype="multipart/form-data" method="POST"> {% csrf_token %}
     <div class="container mt-4">
