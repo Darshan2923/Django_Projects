@@ -6,6 +6,7 @@ urlpatterns = [
     path('',views.index,name='index'),
      path("blog/<str:slug>/", views.blogs_comments, name="blogs_comments"),
     path('add_blogs/',views.add_blogs,name='add_blogs'),
+    path('delete_blog_post/<str:slug>/',views.delete_blog_post,name='delete_blog_post'),
 
     #profile
     path('profile_page/',views.profile_page,name='profile_page'),

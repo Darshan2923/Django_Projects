@@ -48,6 +48,13 @@ def add_blogs(request):
             form=BlogPostForm()
     return render(request,'blogapp/add_blogs.html',{'form':form})
 
+def delete_blog_post(request,slug):
+    posts=BlogPost.objects.get(slug=slug)
+    if request.method=='POST':
+        posts.delete()
+        return redirect('/')
+    return render(request,'blogapp/delete_blog_post.html',{'posts':posts})
+
 def edit_profile(request):
     form = None  # Initialize form outside the try block
     try:
