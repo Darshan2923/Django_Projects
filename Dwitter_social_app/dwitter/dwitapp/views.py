@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 def index(request):
     context={}
-    return render(request,'blogapp/index.html',context)
+    return render(request,'dwitapp/index.html',context)

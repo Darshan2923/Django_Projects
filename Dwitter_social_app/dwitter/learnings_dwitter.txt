@@ -3,3 +3,50 @@
 --Implement one-to-one and many-to-many relationships between Django models
 --Extend the Django user model with a custom Profile model
 --Customize the Django admin interface
+
+
+Overview->
+You’ll implement the project in a series of steps spread out over four parts. There’s a lot to cover, and you’ll go into detail along the way:
+
+📍 Part 1: Models and Relationships
+
+Step 1: Set Up the Base Project
+Step 2: Extend the Django User Model
+Step 3: Implement a Post-Save Hook
+
+
+⏭ Part 2: Templates and Front-End Styling
+
+Step 4: Create a Base Template With Bulma
+Step 5: List All User Profiles
+Step 6: Access Individual Profile Pages
+
+
+⏭ Part 3: Follows and Dweets
+
+Step 7: Follow and Unfollow Other Profiles
+Step 8: Create the Back-End Logic For Dweets
+Step 9: Display Dweets on the Front End
+
+
+⏭ Part 4: Forms and Submissions
+
+Step 10: Submit Dweets Through a Django Form
+Step 11: Prevent Double Submissions and Handle Errors
+Step 12: Improve the Front-End User Experience
+
+
+In most basic form:
+User-to-user connections that allow people to connect with one another
+Content creation and display functionality so that your users can create output for their connected users to view
+
+For the first part of this tutorial series, you’ll need to map out how you can allow users to connect and how this translates to a database schema. This part focuses on connections.
+
+
+Your users will be able to either follow or not follow another user.
+If they follow someone, they’ll see that user’s content. If they don’t, they won’t.
+Your users can follow a person without being followed back. Relationships in your social network can be asymmetrical, meaning that a user can follow someone and see their content without the reverse being true.
+Your users need to be aware of who exists so that they know whom they can follow.
+Users should also be aware of who follows them.
+In your app’s most basic form, users won’t have many extra features available to them. You won’t implement a way to block people, and there won’t be a way to directly respond to content that someone else posted.
+
