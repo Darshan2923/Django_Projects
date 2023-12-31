@@ -1,0 +1,5 @@
+-->In the first part of this tutorial series, you’ll learn how to:
+
+--Implement one-to-one and many-to-many relationships between Django models
+--Extend the Django user model with a custom Profile model
+--Customize the Django admin interface
