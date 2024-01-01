@@ -1,0 +1,8 @@
+{% extends 'snapapp/base.html' %}
+{% block content %}
+<form class="form_div" action="/" method="POST">{% csrf_token %}
+    <h1>Do you want to quit? </h1>
+    <input type="submit" value="Yes">
+    <a href="{% url 'chat' %}">No</a>
+</form>
+{% endblock content %}
